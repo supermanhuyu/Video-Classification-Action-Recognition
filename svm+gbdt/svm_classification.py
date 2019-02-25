@@ -88,15 +88,15 @@ def main():
         times=1
     else:
         raise Exception('wrong datatype')
-    print 'reading data...'
+    print('reading data...')
     train_files,train_label=get_data(item='train',id=id,is_shuffle=is_shuffle,is_subtrain=is_subtrain)
     test_files,test_label=get_data(item='test',id=id,is_shuffle=False,is_subtrain=1)
     len_train,len_test=len(train_label),len(test_label)
     train_data=np.zeros([len_train,1024*times])
     test_data=np.zeros([len_test,1024*times])
 
-    print 'read data done!'
-    print 'transforming data...'
+    print('read data done!')
+    print('transforming data...')
 
 
     for num,train_file in enumerate(train_files):
@@ -104,8 +104,8 @@ def main():
     for num,test_file in enumerate(test_files):
         test_data[num]=Reshape_data(np.load(test_file))
 
-    print 'transform data!'
-    print 'begin to train...'
+    print('transform data!')
+    print('begin to train...')
 
     _svm=None
     if svm_kernel=='rbf':
@@ -162,8 +162,8 @@ def main():
         save_file=os.path.join(ucf_data,'tmp_result','svm0'+id+'_sigma'+str(sigma)+'_C'+str(penalty_C)+'_kernel'+svm_kernel+'.pickle')
         pickle.dump(_svm,open(save_file,'wb'))
 
-    print 'train done!'
-    print 'begin to test...'
+    print('train done!')
+    print('begin to test...')
     if svm_kernel=='gbdt':
         pre_test=model.predict(test)
     else:
@@ -171,7 +171,7 @@ def main():
     #embed()
     accuracy=get_accuracy(pre_test,test_label)
     #embed()
-    print 'accuracy:', accuracy
+    print('accuracy:', accuracy)
 
 if __name__=='__main__':
     main()

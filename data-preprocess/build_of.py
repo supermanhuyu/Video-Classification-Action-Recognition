@@ -15,19 +15,20 @@ def dump_frames(vid_path):
     vid_name = vid_path.split('/')[-1].split('.')[0]
     out_full_path = os.path.join(out_path, vid_name)
 
-    fcount = int(video.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT))
+    # fcount = int(video.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT))
+    fcount = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     try:
         os.mkdir(out_full_path)
     except OSError:
         pass
     file_list = []
-    for i in xrange(fcount):
+    for i in range(fcount):
         ret, frame = video.read()
         assert ret
         cv2.imwrite('{}/{:06d}.jpg'.format(out_full_path, i), frame)
         access_path = '{}/{:06d}.jpg'.format(vid_name, i)
         file_list.append(access_path)
-    print '{} done'.format(vid_name)
+    print('{} done'.format(vid_name))
     sys.stdout.flush()
     return file_list
 
@@ -52,7 +53,7 @@ def run_optical_flow(vid_item, dev_id=0):
         quote(vid_path), quote(flow_x_path), quote(flow_y_path), quote(image_path), dev_id, out_format, new_size[0], new_size[1])
 
     os.system(cmd)
-    print '{} {} done'.format(vid_id, vid_name)
+    print('{} {} done'.format(vid_id, vid_name))
     sys.stdout.flush()
     return True
 
@@ -76,7 +77,7 @@ def run_warp_optical_flow(vid_item, dev_id=0):
         vid_path, flow_x_path, flow_y_path, dev_id, out_format)
 
     os.system(cmd)
-    print 'warp on {} {} done'.format(vid_id, vid_name)
+    print('warp on {} {} done'.format(vid_id, vid_name))
     sys.stdout.flush()
     return True
 
@@ -108,13 +109,13 @@ if __name__ == '__main__':
     NUM_GPU = args.num_gpu
 
     if not os.path.isdir(out_path):
-        print "creating folder: "+out_path
+        print("creating folder: "+out_path)
         os.makedirs(out_path)
 
     vid_list = glob.glob(src_path+'/*/*.'+ext)
-    print len(vid_list)
+    print(len(vid_list))
     pool = Pool(num_worker)
     if flow_type == 'tvl1':
-        pool.map(run_optical_flow, zip(vid_list, xrange(len(vid_list))))
+        pool.map(run_optical_flow, zip(vid_list, range(len(vid_list))))
     elif flow_type == 'warp_tvl1':
-        pool.map(run_warp_optical_flow, zip(vid_list, xrange(len(vid_list))))
+        pool.map(run_warp_optical_flow, zip(vid_list, range(len(vid_list))))

@@ -22,7 +22,8 @@ with open(train_list,'r')as fp:
 with open(os.path.join(root_meta,'train1_frames_list.txt'),'w')as fw:
     fw.write('\n'.join(out_train))
 
-print 'train done!'
+# print 'train done!'
+print('train done!')
 
 with open(test_list,'r')as fp:
     lines_test=fp.readlines()
@@ -40,4 +41,5 @@ with open(test_list,'r')as fp:
 with open(os.path.join(root_meta,'test1_frames_list.txt'),'w')as fw:
     fw.write('\n'.join(out_test))
 
-print 'test done!'
+# print 'test done!'
+print('test done!')

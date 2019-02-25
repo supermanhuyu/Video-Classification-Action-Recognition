@@ -40,6 +40,6 @@ with open(prediction_file,'r')as fp:
         predictions.append(int(line.strip()))
 
 top1_accuracy=get_top1(gt_labels,predictions)
-print 'mean accuracy: ',top1_accuracy
+print('mean accuracy: ',top1_accuracy)
 # confusion_matrix=get_confusion(gt_labels,predictions)
 # np.save(os.path.join(root,'tmp_result/confusionmat_result_lstm_hidden_epoch_6_01.npy'),confusion_matrix)
